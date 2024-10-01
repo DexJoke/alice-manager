@@ -23,7 +23,7 @@ class AliceCore {
   ShakeDetector? _shakeDetector;
 
   /// Helper used for notification management
-  AliceNotification? _notification;
+  // AliceNotification? _notification;
 
   /// Subscription for call changes
   StreamSubscription<List<AliceHttpCall>>? _callsSubscription;
@@ -36,11 +36,11 @@ class AliceCore {
     _configuration = configuration;
     _subscribeToCallChanges();
     if (_configuration.showNotification) {
-      _notification = AliceNotification();
-      _notification?.configure(
-        notificationIcon: _configuration.notificationIcon,
-        openInspectorCallback: navigateToCallListScreen,
-      );
+      // _notification = AliceNotification();
+      // _notification?.configure(
+      //   notificationIcon: _configuration.notificationIcon,
+      //   openInspectorCallback: navigateToCallListScreen,
+      // );
     }
     if (_configuration.showInspectorOnShake) {
       if (OperatingSystem.isAndroid || OperatingSystem.isMacOS) {
@@ -70,10 +70,10 @@ class AliceCore {
   Future<void> _onCallsChanged(List<AliceHttpCall>? calls) async {
     if (calls != null && calls.isNotEmpty) {
       final AliceStats stats = _configuration.aliceStorage.getStats();
-      _notification?.showStatsNotification(
-        context: getContext()!,
-        stats: stats,
-      );
+      // _notification?.showStatsNotification(
+      //   context: getContext()!,
+      //   stats: stats,
+      // );
     }
   }
 
