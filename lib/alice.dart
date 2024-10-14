@@ -17,7 +17,7 @@ export 'alice_widget_overlay.dart';
 class Alice {
   late final AliceCore _aliceCore;
   final DioInterceptor _dioInterceptor = DioInterceptor();
-  DioInterceptor get dioInterceptor => _dioInterceptor;
+  DioInterceptor get dioAdapter => _dioInterceptor;
   final GetConnectInterceptor _getConnectInterceptor = GetConnectInterceptor();
   GetConnectInterceptor get getConnectInterceptor => _getConnectInterceptor;
 

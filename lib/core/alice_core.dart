@@ -3,7 +3,6 @@ import 'dart:async' show FutureOr, StreamSubscription;
 import 'package:alice_manager/core/alice_storage.dart';
 import 'package:alice_manager/core/alice_utils.dart';
 import 'package:alice_manager/helper/alice_export_helper.dart';
-import 'package:alice_manager/core/alice_notification.dart';
 import 'package:alice_manager/helper/operating_system.dart';
 import 'package:alice_manager/model/alice_configuration.dart';
 import 'package:alice_manager/model/alice_export_result.dart';
