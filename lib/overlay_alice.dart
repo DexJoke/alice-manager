@@ -23,7 +23,7 @@ class OverlayAlice {
             ),
             child: Material(
               color: Colors.transparent,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   AliceManager.instance.showInspector();
                 },
