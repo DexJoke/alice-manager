@@ -27,8 +27,10 @@ class AliceExportHelper {
     required BuildContext context,
     required AliceHttpCall call,
   }) async {
-    final callLog =
-        await AliceExportHelper.buildFullCallLog(call: call, context: context);
+    final callLog = await AliceExportHelper.buildFullCallLog(
+      call: call,
+      context: context,
+    );
 
     if (callLog == null) {
       return AliceExportResult(
@@ -37,9 +39,11 @@ class AliceExportHelper {
       );
     }
 
-    await Share.share(
-      callLog,
-      subject: context.i18n(AliceTranslationKey.emailSubject),
+    await SharePlus.instance.share(
+      ShareParams(
+        text: callLog,
+        subject: context.i18n(AliceTranslationKey.emailSubject),
+      ),
     );
 
     return AliceExportResult(success: true);
@@ -110,10 +114,7 @@ class AliceExportHelper {
       await sink.flush();
       await sink.close();
 
-      return AliceExportResult(
-        success: true,
-        path: file.path,
-      );
+      return AliceExportResult(success: true, path: file.path);
     } catch (exception) {
       AliceUtils.log(exception.toString());
       return AliceExportResult(
@@ -219,10 +220,7 @@ class AliceExportHelper {
   }) async {
     try {
       return await _buildAliceLog(context: context) +
-          _buildCallLog(
-            call: call,
-            context: context,
-          );
+          _buildCallLog(call: call, context: context);
     } catch (exception) {
       AliceUtils.log("Failed to generate call log: $exception");
       return null;
