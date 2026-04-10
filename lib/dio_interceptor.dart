@@ -8,10 +8,12 @@ import 'package:alice_manager/model/alice_http_error.dart';
 import 'package:alice_manager/model/alice_http_request.dart';
 import 'package:alice_manager/model/alice_http_response.dart';
 import 'package:alice_manager/model/alice_log.dart';
+import 'package:alice_manager/utils/alice_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class DioInterceptor extends InterceptorsWrapper with AliceAdapter {
+  /// Handles dio request and creates alice http call based on it
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final call = AliceHttpCall(options.hashCode);
@@ -24,7 +26,7 @@ class DioInterceptor extends InterceptorsWrapper with AliceAdapter {
     }
     call
       ..endpoint = path
-      ..server = '${uri.host}:${uri.port}'
+      ..server = uri.host
       ..client = 'Dio'
       ..uri = options.uri.toString();
 
@@ -69,15 +71,15 @@ class DioInterceptor extends InterceptorsWrapper with AliceAdapter {
       } else {
         request
           ..size = utf8.encode(data.toString()).length
-          ..body = json.encode(data);
+          ..body = data;
       }
     }
 
     request
       ..time = DateTime.now()
-      ..headers = _parseHeaders(headers: options.headers)
+      ..headers = AliceParser.parseHeaders(headers: options.headers)
       ..contentType = options.contentType.toString()
-      ..queryParameters = options.queryParameters;
+      ..queryParameters = uri.queryParameters;
 
     call
       ..request = request
@@ -161,17 +163,5 @@ class DioInterceptor extends InterceptorsWrapper with AliceAdapter {
       );
     }
     handler.next(error);
-  }
-
-  Map<String, String> _parseHeaders({dynamic headers}) {
-    if (headers is Map<String, String>) {
-      return headers;
-    }
-
-    if (headers is Map<String, dynamic>) {
-      return headers.map((key, value) => MapEntry(key, value.toString()));
-    }
-
-    throw ArgumentError("Invalid headers value.");
   }
 }
