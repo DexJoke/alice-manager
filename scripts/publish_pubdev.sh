@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # Publish alice_manager lên https://pub.dev
 # Yêu cầu: đã đăng nhập `dart pub login` (hoặc có token PUB_CREDENTIALS).
-set -euo pipefail
-
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
